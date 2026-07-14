@@ -1,3 +1,12 @@
-<p>home works!</p>
 
-<button (click)="appService.modifierLeSignal()">Click me</button>
+@if (appService.pokemon.isLoading()) {
+    <app-loader></app-loader>
+
+} @else {
+    <div>
+        <input type="text" #pokemonInput>
+        <button (click)="appService.pokemonName.set(pokemonInput.value)">Charger un autre pokemon</button>
+    </div>
+    <img [src]="appService.pokemon.value()!.sprites.front_default" alt="">
+    <img [src]="appService.pokemon.value()!.sprites.back_default" alt="">
+}

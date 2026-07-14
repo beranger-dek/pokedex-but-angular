@@ -1,10 +1,17 @@
+import { Pokemon } from './../models/pokemon.models';
+import { httpResource } from '@angular/common/http';
 import { Service, signal } from '@angular/core';
 
 @Service()
 export class AppService {
-    mySignal = signal(42)
 
-    modifierLeSignal() {
-        this.mySignal.update(old => old + 1)
+    pokemonName = signal('Pikachu')
+    pokemon = httpResource<Pokemon>(() => 'https://pokeapi.co/api/v2/pokemon/' + this.pokemonName())
+
+    constructor() {
+        setTimeout(() => {
+            this.pokemonName.set('Eevee')
+        }, 2000);
     }
+
 }
