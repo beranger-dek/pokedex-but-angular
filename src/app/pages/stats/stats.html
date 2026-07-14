@@ -1,0 +1,7 @@
+@if (appService.pokemon.value(); as pokemon) {
+    <app-chart [stats]="pokemon.stats"></app-chart>
+
+    @for (stat of pokemon.stats; track stat.base_stat) {
+        <p>{{ stat.stat.name | titlecase }} : {{ stat.base_stat }}</p>
+    }
+}
