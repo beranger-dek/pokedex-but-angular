@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { AppService } from '../../services/app-service';
 import { Loader } from "../../components/loader/loader";
 import { TitleCasePipe } from '@angular/common';
+import { PokemonClient } from 'pokenode-ts';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -10,7 +11,27 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './home.css',
 })
 export class Home {
-  appService = inject(AppService)
+  appService = inject(AppService);
+  
+  get animatedOrDefaultSprite(): string | null {
+    return (
+      this.appService.pokemon.value()!.sprites.versions?.['generation-v']?.['black-white']?.animated?.front_default ??
+      this.appService.pokemon.value()!.sprites.front_default
+    );
+  }
 
-  signalTest = signal(0)
+  get pokemonColorClass(): string {
+    const colorName = this.appService.pokemonSpecies.value()?.color.name;
+    return colorName ? `color-${colorName}` : '';
 }
+
+  get region(): string {
+    return this.appService.pokemonGeneration.value()?.main_region.name ?? '';
+  }
+  get japaneseName(): string {
+    const names = this.appService.pokemonSpecies.value()?.names ?? [];
+    return names.find(n => n.language.name === 'ja-Hrkt')?.name ?? '';
+  }
+
+}
+

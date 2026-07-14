@@ -1,4 +1,6 @@
 import { Pokemon } from './../models/pokemon.models';
+import { PokemonSpecies } from 'pokenode-ts';
+import { Generation } from './../models/game.models';
 import { httpResource } from '@angular/common/http';
 import { Service, signal } from '@angular/core';
 
@@ -8,10 +10,13 @@ export class AppService {
     pokemonName = signal('Pikachu')
     pokemon = httpResource<Pokemon>(() => 'https://pokeapi.co/api/v2/pokemon/' + this.pokemonName())
 
-    constructor() {
-        setTimeout(() => {
-            this.pokemonName.set('Eevee')
-        }, 2000);
-    }
+    pokemonSpecies = httpResource<PokemonSpecies>(() => {
+        const species = this.pokemon.value()?.species;
+        return species ? species.url : undefined; // undefined = don't fetch yet
+    });
+    pokemonGeneration = httpResource<Generation>(() => {
+        const generation = this.pokemonSpecies.value()?.generation;
+        return generation ? generation.url : undefined;
+    });
 
 }
