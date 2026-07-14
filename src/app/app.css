@@ -43,6 +43,7 @@ nav{
 main{
     grid-row-start: 2;
     padding: 20px;
+    background-color: #f6f8fc;
 }
 footer{
     grid-row-start: 3;

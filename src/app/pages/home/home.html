@@ -7,6 +7,16 @@
         <input type="text" #pokemonInput>
         <button (click)="appService.pokemonName.set(pokemonInput.value)">Charger un autre pokemon</button>
     </div>
-    <img [src]="appService.pokemon.value()!.sprites.front_default" alt="">
-    <img [src]="appService.pokemon.value()!.sprites.back_default" alt="">
+    <img [src]="appService.pokemon.value()!.sprites.front_default" alt="">  
+    @if (appService.pokemon.value(); as pokemon) {
+        <div class="poke-card">
+            <img [src]="pokemon.sprites.versions['generation-v']['black-white'].animated.front_default" [alt]="pokemon.name">
+            <h4 class="poke-id">N°{{appService.pokemon.value()!.id}}</h4>
+            <h2>{{appService.pokemon.value()!.name | titlecase}}</h2>
+            @for (type of appService.pokemon.value()!.types; track type.slot) {
+                <p>{{type.type.url}}</p>
+            }
+        </div>
+    
+}
 }

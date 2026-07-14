@@ -15,10 +15,20 @@ export class Chart implements OnChanges {
   @Input() stats: { base_stat: number; stat: { name: string } }[] = [];
 
   public radarChartOptions: ChartConfiguration['options'] = {
-    animation: {
-    duration: 400,
-    easing: 'easeOutQuart',
-  },
+    animation: { duration: 300 },
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      r: {
+        min: 0,
+        pointLabels: {
+          font: {
+            size: 14, // default is usually 10-12
+          },
+        },
+      },
+    },
   };
   public radarChartType: ChartType = 'radar';
 
@@ -32,7 +42,7 @@ export class Chart implements OnChanges {
   ngOnChanges(): void {
     if (this.stats?.length) {
       this.radarChartData = {
-        labels: this.stats.map(s => this.titleCasePipe.transform(s.stat.name)),
+        labels: this.stats.map(s => this.titleCasePipe.transform(s.stat.name.replace('-', ' '))),
         datasets: [
           { data: this.stats.map(s => s.base_stat), label: 'Stats' },
         ],
