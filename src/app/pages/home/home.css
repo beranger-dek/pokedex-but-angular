@@ -1,20 +1,54 @@
 
-.poke-card{
-    height: 200px;
-    width: 250px;
-    padding: 10px 30px 50px 30px;
-    border-radius: 9px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    .poke-id{
-        color: gray;
-        font-weight: bolder;
-    }
-    img{
-        position: relative;
-        top: -40px;
-    }
+.poke-card {
+  position: relative;    /* needed so the watermark can position itself relative to the card */
+  width: 200px;
+  min-height: 150px;
+  background-color: #2e323c;
+  border-radius: 16px;
+  padding: 24px;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+  color: white;
+
+  .poke-id-watermark {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    font-size: 64px;
+    font-weight: 800;
+    color: rgba(247, 208, 44, 0.08);  /* very low opacity — barely visible, that's the point */
+    line-height: 1;
+    pointer-events: none;             /* so it doesn't block clicks on things behind/around it */
+    user-select: none;                /* prevents accidental text selection */
+    z-index: 0;
+  }
+
+  img, .poke-name, .poke-type {
+    position: relative;
+    z-index: 1;    /* keeps real content above the watermark */
+  }
+
+  img {
+    margin-top: -70px;
+  }
+}
+.color-yellow { box-shadow: 6px 6px 0px rgba(247, 208, 44, 0.5); }
+.color-red    { box-shadow: 6px 6px 0px rgba(224, 90, 79, 0.5); }
+.color-blue   { box-shadow: 6px 6px 0px rgba(79, 143, 239, 0.5); }
+.color-green  { box-shadow: 6px 6px 0px rgba(95, 191, 95, 0.5); }
+.color-purple { box-shadow: 6px 6px 0px rgba(167, 111, 209, 0.5); }
+.color-pink   { box-shadow: 6px 6px 0px rgba(245, 163, 199, 0.5); }
+.color-brown  { box-shadow: 6px 6px 0px rgba(165, 101, 47, 0.5); }
+.color-gray   { box-shadow: 6px 6px 0px rgba(154, 154, 154, 0.5); }
+.color-black  { box-shadow: 6px 6px 0px rgba(60, 60, 60, 0.5); }
+.color-white  { box-shadow: 6px 6px 0px rgba(242, 242, 242, 0.4); }
+.poke-jp-name {
+  font-size: 13px;
+  color: #9a9a9a;
+  margin-top: 2px;
+  font-family: 'Noto Sans JP', sans-serif;   /* keep this — still needed for the glyphs to render */
 }

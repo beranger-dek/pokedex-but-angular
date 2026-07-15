@@ -8,15 +8,19 @@
         <button (click)="appService.pokemonName.set(pokemonInput.value)">Charger un autre pokemon</button>
     </div>
     <img [src]="appService.pokemon.value()!.sprites.front_default" alt="">  
-    @if (appService.pokemon.value(); as pokemon) {
-        <div class="poke-card">
-            <img [src]="pokemon.sprites.versions['generation-v']['black-white'].animated.front_default" [alt]="pokemon.name">
-            <h4 class="poke-id">N°{{appService.pokemon.value()!.id}}</h4>
-            <h2>{{appService.pokemon.value()!.name | titlecase}}</h2>
-            @for (type of appService.pokemon.value()!.types; track type.slot) {
-                <p>{{type.type.url}}</p>
+    @if (appService.pokemon.value(); as selectedPokemon) {
+        <div class="poke-card" [class]="pokemonColorClass">
+            <img [src]="animatedOrDefaultSprite" [alt]="selectedPokemon.name">
+            <span class="poke-id-watermark">{{ selectedPokemon.id.toString().padStart(3, '0') }}</span>
+            <h2>{{selectedPokemon.name | titlecase}}</h2>
+            @for (type of selectedPokemon.types; track type.slot) {
+                <p>{{type.type.name}}</p>
+            }
+            @if (appService.pokemonSpecies.value(); as species) {
+            <p>Color: {{ species.color.name | titlecase }}</p>
+            <p class="poke-jp-name">{{ japaneseName }}</p>
             }
         </div>
-    
+
 }
 }
